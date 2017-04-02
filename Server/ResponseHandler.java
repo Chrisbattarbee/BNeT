@@ -4,5 +4,5 @@ import java.io.DataInputStream;
 
 public interface ResponseHandler {
 
-  void handleResponse(DataInputStream clientDataStream);
+  void handleResponse(DataInputStream clientDataStream, String identifier);
 }

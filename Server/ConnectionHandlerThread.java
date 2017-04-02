@@ -34,7 +34,7 @@ public class ConnectionHandlerThread extends Thread {
         if (!this.taskQueue.isEmpty()) {
           Task task = this.taskQueue.poll();
           objectOutputStream.writeObject(task);
-          task.getResponseHandler().handleResponse(dataInputStream);
+          task.getResponseHandler().handleResponse(dataInputStream, clientSocket.getInetAddress().toString());
         }
 
         try {
