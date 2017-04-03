@@ -1,19 +1,19 @@
 package Server;
 
-import java.io.DataOutputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public abstract class Task extends Thread implements Serializable {
 
-  private DataOutputStream streamToServer;
+  private ObjectOutputStream streamToServer;
 
-  public void setStreamToServer(DataOutputStream streamToServer) {
+  public void setStreamToServer(ObjectOutputStream streamToServer) {
     this.streamToServer = streamToServer;
   }
 
   public abstract void execute();
 
-  public abstract void returnResponse(DataOutputStream streamToServer);
+  public abstract void returnResponse(ObjectOutputStream streamToServer);
 
   @Override
   public void run() {

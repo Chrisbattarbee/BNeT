@@ -2,8 +2,8 @@ package Server.Tasks.DenialOfService;
 
 import Server.ResponseHandler;
 import Server.Task;
-import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -63,11 +63,12 @@ public class DenialOfServiceTask extends Task {
   }
 
   @Override
-  public void returnResponse(DataOutputStream streamToServer) {
+  public void returnResponse(ObjectOutputStream streamToServer) {
     try {
       streamToServer.writeInt(this.numRequests.get());
       streamToServer.writeUTF(this.attackAddress);
       streamToServer.writeInt(this.howLongInSeconds);
+      streamToServer.flush();
     } catch (IOException e) {
       e.printStackTrace();
     }

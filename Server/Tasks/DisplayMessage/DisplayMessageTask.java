@@ -8,8 +8,8 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Scanner;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -45,9 +45,10 @@ public class DisplayMessageTask extends Task {
   }
 
   @Override
-  public void returnResponse(DataOutputStream streamToServer) {
+  public void returnResponse(ObjectOutputStream streamToServer) {
     try {
       streamToServer.writeUTF(this.message);
+      streamToServer.flush();
     } catch (IOException e) {
       e.printStackTrace();
     }

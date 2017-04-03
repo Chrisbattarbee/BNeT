@@ -1,9 +1,9 @@
 package Server;
 
-import java.io.DataInputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.PriorityQueue;
+import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -12,7 +12,7 @@ public class ConnectionHandlerThread extends Thread {
   private static final int waitTimeBetweenPollingEventQueueMS = 1000;
 
   private final AtomicBoolean shouldContinueProcessing = new AtomicBoolean(true);
-  private final Queue<Task> taskQueue = new PriorityQueue<>();
+  private final Queue<Task> taskQueue = new ArrayDeque<Task>();
   Socket clientSocket;
 
   public ConnectionHandlerThread(Socket clientSocket) {
@@ -28,13 +28,14 @@ public class ConnectionHandlerThread extends Thread {
     try {
       ObjectOutputStream objectOutputStream = new ObjectOutputStream(
           this.clientSocket.getOutputStream());
-      DataInputStream dataInputStream = new DataInputStream(this.clientSocket.getInputStream());
+      ObjectInputStream dataInputStream = new ObjectInputStream(this.clientSocket.getInputStream());
 
       while (this.shouldContinueProcessing.get()) {
         if (!this.taskQueue.isEmpty()) {
           Task task = this.taskQueue.poll();
           objectOutputStream.writeObject(task);
-          task.getResponseHandler().handleResponse(dataInputStream, clientSocket.getInetAddress().toString());
+          task.getResponseHandler().handleResponse(dataInputStream,
+              this.clientSocket.getInetAddress().toString());
         }
 
         try {
@@ -45,7 +46,7 @@ public class ConnectionHandlerThread extends Thread {
       }
 
     } catch (Exception e) {
-      System.out.println(e.getStackTrace());
+      e.printStackTrace();
     }
   }
 

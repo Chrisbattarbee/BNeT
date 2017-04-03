@@ -1,8 +1,8 @@
 package Server;
 
-import java.io.DataInputStream;
+import java.io.ObjectInputStream;
 
 public interface ResponseHandler {
 
-  void handleResponse(DataInputStream clientDataStream, String identifier);
+  void handleResponse(ObjectInputStream clientDataStream, String identifier);
 }

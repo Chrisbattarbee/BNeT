@@ -1,13 +1,13 @@
 package Server.Tasks.DisplayMessage;
 
 import Server.ResponseHandler;
-import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 
 public class DisplayMessageResponseHandler implements ResponseHandler {
 
   @Override
-  public void handleResponse(DataInputStream clientDataStream, String identifier) {
+  public void handleResponse(ObjectInputStream clientDataStream, String identifier) {
     try {
       String message = clientDataStream.readUTF();
       System.out.println("Displayed " + message + " on " + identifier + "'s screen");

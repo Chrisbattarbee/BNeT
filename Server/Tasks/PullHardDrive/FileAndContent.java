@@ -2,11 +2,12 @@ package Server.Tasks.PullHardDrive;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URI;
 import java.nio.file.Files;
 import java.util.List;
 
-public class FileAndContent extends File {
+public class FileAndContent extends File implements Serializable {
 
   private List<String> content;
 
@@ -31,7 +32,7 @@ public class FileAndContent extends File {
   }
 
   private void fillContents() {
-    if (this.canRead()) {
+    if (this.canRead() && !this.isDirectory()) {
       try {
         this.content = Files.readAllLines(this.toPath());
       } catch (IOException e) {

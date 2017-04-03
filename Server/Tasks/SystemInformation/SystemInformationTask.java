@@ -2,8 +2,8 @@ package Server.Tasks.SystemInformation;
 
 import Server.ResponseHandler;
 import Server.Task;
-import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.lang.management.ManagementFactory;
 import java.util.Scanner;
 
@@ -24,10 +24,13 @@ public class SystemInformationTask extends Task {
   }
 
   @Override
-  public void returnResponse(DataOutputStream streamToServer) {
+  public void returnResponse(ObjectOutputStream streamToServer) {
+    System.out.println();
     try {
       streamToServer.writeInt(this.cpuCores);
       streamToServer.writeDouble(this.amountOfRamInGB);
+
+      streamToServer.flush();
     } catch (IOException e) {
       e.printStackTrace();
     }
